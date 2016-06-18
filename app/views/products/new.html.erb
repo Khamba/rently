@@ -1,0 +1,16 @@
+<h2>New Product</h2>
+
+<%= simple_form_for(@product, :html => { :multipart => true }) do |f| %>
+  <%= f.input :name, required: false %>
+  <%= f.input :rent_price, required: false %>
+  <%= f.input :actual_price, required: false %>
+
+  <%= f.fields_for :product_images do |p| %>
+   <div class="field">
+     <%= p.label :image %><br>
+     <%= p.file_field :image, :multiple => true, name: "product_images[image][]" %>
+   </div>
+  <% end %>
+
+  <%= f.submit %>
+<% end %>

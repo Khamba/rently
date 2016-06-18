@@ -1,0 +1,11 @@
+Welcome!
+
+<br><br>
+
+<% if user_signed_in? %>
+  <%= link_to "Log Out", logout_path, method: :delete %> <br> <br>
+<% else %>
+  <%= link_to '<span class="fa fa-facebook"></span> Sign in with Facebook'.html_safe, user_omniauth_authorize_path(:facebook), class: 'waves-effect waves-light btn' %> <br> <br>
+<% end %>
+
+<%= link_to "All Products", products_path %>

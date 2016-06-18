@@ -1,0 +1,9 @@
+<h2>Edit Product</h2>
+
+<%= simple_form_for(@product, :html => { :multipart => true }) do |f| %>
+  <%= f.input :name, required: false %>
+  <%= f.input :rent_price, required: false %>
+  <%= f.input :actual_price, required: false %>
+
+  <%= f.submit %>
+<% end %>

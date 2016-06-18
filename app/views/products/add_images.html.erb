@@ -1,0 +1,7 @@
+<%= simple_form_for(:product_images, url: create_images_product_path(@product)) do |p| %>
+   <div class="field">
+     <%= p.label :image %><br>
+     <%= p.file_field :image, :multiple => true, name: "product_images[image][]" %>
+   </div>
+   <%= p.submit %>
+<% end %>

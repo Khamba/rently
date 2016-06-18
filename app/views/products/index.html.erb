@@ -1,0 +1,51 @@
+<% sort = [['Price: low to high', 'price'], ['Price: high to low', 'price_desc'], ['Popularity', 'popularity']] %>
+<% params[:sort_by] = 'popularity' if params[:sort_by] != 'price' and params[:sort_by] != 'price_desc' %>
+<!-- Dropdown Trigger -->
+<a class='dropdown-button btn' href='#' data-activates='sort_by'>Sort By: <%= sort.select { |e| e[1] == params[:sort_by] }[0][0] %></a>
+
+<!-- Dropdown Structure -->
+<ul id='sort_by' class='dropdown-content'>
+  <% sort.reject { |e| e[1] == params[:sort_by] }.each do |e| %>
+    <li><%= link_to(e[0], products_path(sort_by: e[1])) %></li>
+  <% end %>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Rent Price</th>
+        <th>Actual Price</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= link_to(product.name, product_path(product)) %></td>
+        <td><%= product.description %></td>
+        <td><%= product.rent_price %></td>
+        <td><%= product.actual_price %></td>
+        <td>
+          <% if user_signed_in? %>
+            <%= link_to((current_user.likes?(product) ? "Unlike" : "Like" ), like_product_path(product), remote: :true, method: :post) %>
+          <% else %>
+            Like [Display pop-up (with link) to sign in here]
+          <% end %>
+        </td>
+        <td>
+          <% if user_signed_in? %>
+            <%= link_to((current_user.wishlisted_product?(product) ? "Remove from Wishlist" : "Add to Wishlist" ), wishlist_product_path(product), remote: :true, method: :post) %>
+          <% else %>
+            Add to Wishlist [Display pop-up (with link) to sign in here]
+          <% end %>
+        </td>
+        <td><%= link_to "Edit", edit_product_path(product) %></td>
+        <td><%= link_to "Delete", product_path(product), method: :delete %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "New", new_product_path %>
